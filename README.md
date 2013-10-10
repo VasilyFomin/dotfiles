@@ -1,4 +1,3 @@
 dotfiles
 ========
-
-dotFiles
+The place to store all dot files.

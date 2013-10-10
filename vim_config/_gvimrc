@@ -1,0 +1,19 @@
+" Highlight current row
+set cursorline
+" Disale tools panels
+set guioptions-=T
+" Disable graphics digalogs
+set guioptions+=c
+" Disable graphics tabs
+set guioptions-=e
+" Hide menu
+set guioptions-=m
+" Hide scrollbars
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+" Set font
+set guifont=Monospace\ 11
+" Set theme
+"colorscheme molokai
