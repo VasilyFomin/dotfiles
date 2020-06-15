@@ -16,6 +16,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -32,6 +34,11 @@ endif
 let mapleader = " "
 nnoremap <leader>ff :Files<cr>
 nnoremap <leader>ps :Rg<cr>
+nnoremap <leader>bb :Buffers<cr>
+
+" jump to the matching bracket, and visually select text in between
+" if press =% it'll reindent the matching text
+noremap % v%
 
 syntax on
 let g:gruvbox_guisp_fallback = "bg"
@@ -44,8 +51,8 @@ set number
 set ignorecase
 set smartcase
 
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set shiftround
 set expandtab
 set formatoptions+=b
