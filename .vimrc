@@ -18,6 +18,10 @@ Plug 'junegunn/fzf', { 'do': function('fzf#install') }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+" "K" to jump to man, :make to source tmux.conf, g! exec lines, g!! just line
+Plug 'tmux-plugins/vim-tmux'
+Plug 'vim-utils/vim-man'
 
 call plug#end()
 
@@ -36,22 +40,41 @@ nnoremap <leader>ff :Files<cr>
 nnoremap <leader>ps :Rg<cr>
 nnoremap <leader>bb :Buffers<cr>
 
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>op :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+
+" it maps conflicting <leader>h keys
+let g:gitgutter_map_keys = 0
+
 " jump to the matching bracket, and visually select text in between
 " if press =% it'll reindent the matching text
 noremap % v%
 
-syntax on
 let g:gruvbox_guisp_fallback = "bg"
 let g:gruvbox_contrast_dark = "hard"
+" let g:netrw_browse_split=2
+let g:netrw_winsize = 25
+let $FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git}/*" 2> /dev/null'
+let g:fzf_preview_window = 'right:50%'
+
+syntax on
 colorscheme gruvbox
 set background=dark
+set noerrorbells
 
 set cursorline
 set number
 set ignorecase
 set smartcase
+set smartindent
+set nowrap
+" Autoread changes from the disk
+set autoread
 
-set tabstop=4
+set tabstop=4 softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
@@ -76,28 +99,20 @@ set listchars+=extends:>
 " continues beyond the right of the screen
 set listchars+=precedes:<
 
-let g:is_bash=1
-" let g:indent_guides_enable_on_vim_startup = 1
-
 set incsearch
 set hlsearch
 set wildmenu
 set wildmode=longest:full,full
 " Set default paste buffer to system buffer
 set clipboard=unnamed
-
 set spelllang=en_us
-
-" if executable('ag')
-"   let g:ackprg = 'ag --vimgrep'
-" endif
+set relativenumber
 
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
+" Uncomment the following to have Vim jump to the last position when reopening a file
 if has("autocmd")
  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
