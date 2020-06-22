@@ -22,6 +22,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 " "K" to jump to man, :make to source tmux.conf, g! exec lines, g!! just line
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
+Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
 
