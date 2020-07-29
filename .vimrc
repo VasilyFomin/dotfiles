@@ -13,7 +13,7 @@ Plug 'mileszs/ack.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'junegunn/fzf', { 'do': function('fzf#install') }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
@@ -22,7 +22,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 " "K" to jump to man, :make to source tmux.conf, g! exec lines, g!! just line
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
-Plug 'ycm-core/YouCompleteMe'
+" Also :CocInstall coc-python coc-json coc-cmake coc-html coc-yaml
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -37,15 +38,20 @@ if executable('rg')
 endif
 
 let mapleader = " "
-nnoremap <leader>ff :Files<cr>
+nnoremap <leader>ff :GFiles<cr>
+nnoremap <leader>fF :Files<cr>
 nnoremap <leader>ps :Rg<cr>
+" Search for word under cursor
+nnoremap <leader>pw :Rg <C-R><C-W><CR>
 nnoremap <leader>bb :Buffers<cr>
 
-nnoremap <leader>h :wincmd h<CR>
-nnoremap <leader>j :wincmd j<CR>
-nnoremap <leader>k :wincmd k<CR>
-nnoremap <leader>l :wincmd l<CR>
-nnoremap <leader>op :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <silent> <leader>h :wincmd h<CR>
+nnoremap <silent> <leader>j :wincmd j<CR>
+nnoremap <silent> <leader>k :wincmd k<CR>
+nnoremap <silent> <leader>l :wincmd l<CR>
+nnoremap <silent> <leader>op :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+
+
 
 " it maps conflicting <leader>h keys
 let g:gitgutter_map_keys = 0
@@ -58,8 +64,9 @@ let g:gruvbox_guisp_fallback = "bg"
 let g:gruvbox_contrast_dark = "hard"
 " let g:netrw_browse_split=2
 let g:netrw_winsize = 25
-let $FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git}/*" 2> /dev/null'
-let g:fzf_preview_window = 'right:50%'
+" let $FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git}/*" 2> /dev/null'
+let g:fzf_layout = { 'window' : { 'width': 0.8, 'height': 0.8 } }
+let $FZF_DEFAULT_OPTIONS = '--reverse'
 
 syntax on
 colorscheme gruvbox
@@ -108,6 +115,15 @@ set wildmode=longest:full,full
 set clipboard=unnamed
 set spelllang=en_us
 set relativenumber
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Don't replace current split with the new one
+" set splitbelow splitright
 
 
 autocmd StdinReadPre * let s:std_in=1
@@ -134,6 +150,10 @@ if !isdirectory($HOME."/.vim")
 endif
 if !isdirectory($HOME."/.vim/undo-dir")
     call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+
+if !isdirectory($HOME."/.vim/sessions")
+    call mkdir($HOME."/.vim/sessions", "", 0700)
 endif
 
 set backup
