@@ -23,6 +23,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -108,6 +109,7 @@ set wildmode=longest:full,full
 set clipboard=unnamed
 set spelllang=en_us
 set relativenumber
+set autochdir
 
 
 autocmd StdinReadPre * let s:std_in=1

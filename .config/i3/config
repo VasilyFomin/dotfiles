@@ -24,13 +24,14 @@ font pango:Hack 9
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork ~/Pictures/IMG_9803.png
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --image ~/Pictures/IMG_9803.png
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-exec --no-startup-id /usr/bin/user-hooks
+# exec --no-startup-id /usr/bin/user-hooks
 exec --no-startup-id compton
+exec --no-startup-id /usr/local/bin/volctl
 
 # exec /usr/bin/gnome-session
 # exec /usr/bin/unity-settings-daemon
@@ -42,8 +43,19 @@ exec --no-startup-id /usr/bin/gnome-screensaver
 set $wallpaper $HOME/.config/wallpapers/IMG_9803.jpg
 exec_always --no-startup-id feh --no-fehbg --bg-scale $wallpaper $wallpaper
 
-exec_always setxkbmap -layout us,ru
-exec_always setxkbmap -option 'grp:caps_toggle'
+# exec_always setxkbmap -layout us,ru
+# exec_always setxkbmap -option 'grp:caps_toggle'
+
+# use Alt_L as Mod, but keep using Alt_R
+exec_always --no-startup-id xmodmap -e "remove Mod1 = Alt_R"
+exec_always --no-startup-id xmodmap -e "add Mod3 = Alt_R"
+exec_always --no-startup-id setxkbmap -layout us,ru -option grp:caps_toggle
+
+# remap caps as ctrl
+# exec_always --no-startup-id xmodmap -e "clear lock"
+# exec_always --no-startup-id xmodmap -e "clear control"
+# exec_always --no-startup-id xmodmap -e "keycode 66 = Control_L"
+# exec_always --no-startup-id xmodmap -e "add control = Control_L Control_R"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -166,21 +178,20 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+m exec xrandr --output eDP-1 --off
-bindsym $mod+Shift+m exec xrandr --output eDP-1 --mode 1920x1080 --left-of DP-1-2
 
-set $mode_display Ext Screen (g) Internal, (h) DP-1-2, (t) Internal OFF, (y) DP-1-2 OFF
-mode "$mode_display" {
-    bindsym g exec --no-startup-id xrandr --output eDP-1 --auto --left-of DP-1-2 && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
-    bindsym h exec --no-startup-id xrandr --output DP-1-2 --auto --right-of eDP-1 --primary && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
-    bindsym t exec --no-startup-id xrandr --output eDP-1 --auto --off && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
-    bindsym y exec --no-startup-id xrandr --output DP-1-2 --auto --off && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
+# Mode to configure monitors
+exec --no-startup-id xrandr --output eDP-1 --auto --primary --output DP-1-2 --off
+set $mode_monitor Switch Monitor: [l]aptop, [m]onitor, [b]oth laptop + monitor
+mode "$mode_monitor" {
+    bindsym l exec --no-startup-id xrandr --output eDP-1 --auto --primary --output DP-1-2 --off && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
+    bindsym m exec --no-startup-id xrandr --output eDP-1 --off --output DP-1-2 --auto --primary && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
+    bindsym b exec --no-startup-id xrandr --output eDP-1 --auto --left-of DP-1-2 --output DP-1-2 --auto --primary && feh --no-fehbg --bg-scale $wallpaper $wallpaper, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+x mode "$mode_display"
+bindsym $mod+m mode "$mode_monitor"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -225,4 +236,6 @@ assign [class="Firefox"] $ws3
 assign [class="Chromium-browser"] $ws4
 assign [class="Cisco AnyConnect Secure Mobility Client"] $ws10
 for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Solaar"] floating enable
 
