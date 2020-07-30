@@ -23,8 +23,11 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
 Plug 'rust-lang/rust.vim'
-" Also :CocInstall coc-python coc-json coc-cmake coc-html coc-yaml
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+if has('nvim')
+  " Also :CocInstall coc-python coc-json coc-cmake coc-html coc-yaml
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 
 call plug#end()
 
@@ -32,10 +35,6 @@ if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
-endif
-
-if executable('rg')
-  let g:ackprg = 'rg --vimgrep'
 endif
 
 let mapleader = " "
