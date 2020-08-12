@@ -1,0 +1,15 @@
+close_on_unfocus = 1
+mark_today = 1
+show_calendar = 1
+show_timezones = 1
+mainwindow_position = center
+clock_label = Local
+clock_tz =
+clock_label = UTC
+clock_tz = :UTC
+clock_label = Moscow
+clock_tz = :Europe/Moscow
+clock_label = Berlin
+clock_tz = :Europe/Berlin
+clock_label = Israel
+clock_tz = :Israel

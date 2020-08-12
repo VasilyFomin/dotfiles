@@ -32,6 +32,7 @@ exec --no-startup-id nm-applet
 # exec --no-startup-id /usr/bin/user-hooks
 exec --no-startup-id compton
 exec --no-startup-id /usr/local/bin/volctl
+exec --no-startup-id setxkbmap -layout us,ru -option 'grp:caps_toggle,grp_led:caps'
 
 # exec /usr/bin/gnome-session
 # exec /usr/bin/unity-settings-daemon
@@ -42,20 +43,6 @@ exec --no-startup-id /usr/local/bin/volctl
 exec --no-startup-id /usr/bin/gnome-screensaver
 set $wallpaper $HOME/.config/wallpapers/IMG_9803.jpg
 exec_always --no-startup-id feh --no-fehbg --bg-scale $wallpaper $wallpaper
-
-# exec_always setxkbmap -layout us,ru
-# exec_always setxkbmap -option 'grp:caps_toggle'
-
-# use Alt_L as Mod, but keep using Alt_R
-exec_always --no-startup-id xmodmap -e "remove Mod1 = Alt_R"
-exec_always --no-startup-id xmodmap -e "add Mod3 = Alt_R"
-exec_always --no-startup-id setxkbmap -layout us,ru -option grp:caps_toggle
-
-# remap caps as ctrl
-# exec_always --no-startup-id xmodmap -e "clear lock"
-# exec_always --no-startup-id xmodmap -e "clear control"
-# exec_always --no-startup-id xmodmap -e "keycode 66 = Control_L"
-# exec_always --no-startup-id xmodmap -e "add control = Control_L Control_R"
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -141,11 +128,11 @@ set $ws1 "1: Cloud"
 set $ws2 "2: Vehicle"
 set $ws3 "3: Firefox"
 set $ws4 "4: Chromium"
-set $ws5 "5"
+set $ws5 "5: Notes"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
+set $ws9 "9: Slack"
 set $ws10 "10: VPN"
 
 # switch to workspace
@@ -223,19 +210,42 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        position top
-        status_command i3status
-        font pango:Hack 11
-        output primary
-        tray_output primary
-        workspace_buttons yes
+    status_command SCRIPT_DIR=~/.config/i3blocks i3blocks
+    position top
+    font pango:Hack 11
+    output primary
+    tray_output primary
+
+    colors {
+        background #504945
+        statusline #d5c4a1
+        separator #3c3836 
+        focused_workspace #3c3836 #32302f #fabd2f
+        active_workspace #3c3836 #504945 #d5c4a1
+        inactive_workspace #3c3836 #504945 #d5c4a1
+        urgent_workspace   #7c6f64 #fabd2f #3c3836
+    }
 }
 
 # get with xprop
 assign [class="Firefox"] $ws3
 assign [class="Chromium-browser"] $ws4
+assign [class="Zim"] $ws5
+assign [class="Slack"] $ws9
 assign [class="Cisco AnyConnect Secure Mobility Client"] $ws10
 for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Solaar"] floating enable
+for_window [class="(?i)gsimplecal"] floating enable
+
+# gruvbox theme
+# $i3-theme-window
+# class                 border  backgr. text    indicator
+client.focused          #3c3836 #32302f #fabd2f #fabd2f
+client.focused_inactive #3c3836 #504945 #d5c4a1 #504945
+client.unfocused        #3c3836 #504945 #d5c4a1 #504945
+client.urgent           #7c6f64 #fabd2f #3c3836 #fabd2f
+
+# $i3-background
+exec_always --no-startup-id xsetroot -solid '#3c3836'
 
