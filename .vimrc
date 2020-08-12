@@ -51,6 +51,8 @@ nnoremap <silent> <leader>k :wincmd k<CR>
 nnoremap <silent> <leader>l :wincmd l<CR>
 nnoremap <silent> <leader>op :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 
+nnoremap <leader>gs :Git<CR>
+
 
 
 " it maps conflicting <leader>h keys
@@ -115,7 +117,7 @@ set wildmode=longest:full,full
 set clipboard=unnamed
 set spelllang=en_us
 set relativenumber
-set autochdir
+" set autochdir
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
@@ -126,6 +128,8 @@ set shortmess+=c
 " Don't replace current split with the new one
 " set splitbelow splitright
 
+set title
+set titlestring=%{hostname()}\ \ %F\ \ %{strftime('%Y-%m-%d\ %H:%M',getftime(expand('%')))}
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif

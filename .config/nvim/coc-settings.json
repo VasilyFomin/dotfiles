@@ -1,4 +1,8 @@
 {
     "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true
+    "python.linting.flake8Enabled": true,
+    // pip3 install jedi
+    // pip3 show jedi
+    "python.jediEnabled": true,
+    "python.jediPath": "/local/home/vasilyf/.local/lib/python3.7/site-packages"
 }
