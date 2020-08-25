@@ -23,6 +23,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
 Plug 'rust-lang/rust.vim'
+Plug 'michaeljsmith/vim-indent-object'
 
 if has('nvim')
   " Also :CocInstall coc-python coc-json coc-cmake coc-html coc-yaml
