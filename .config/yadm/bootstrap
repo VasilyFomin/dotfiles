@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mkdir ~/bin
+echo "Downloading nvim"
+mkdir ~/bin
+curl -fLo ~/bin/vim https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+chmod a+x ~/bin/vim

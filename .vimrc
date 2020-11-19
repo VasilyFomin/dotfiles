@@ -27,9 +27,11 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'michaeljsmith/vim-indent-object'
 
-Plug '/apollo/env/envImprovement/vim/amazon/brazil-config/'
-
+if isdirectory("/apollo/env/envImprovement/vim/amazon/brazil-config/")
+    Plug '/apollo/env/envImprovement/vim/amazon/brazil-config/'
+endif
 
 if has('nvim')
   " :CocInstall coc-json coc-cmake coc-html coc-yaml coc-clangd coc-css coc-sh coc-vimlsp coc-xml
