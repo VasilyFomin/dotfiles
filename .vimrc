@@ -14,7 +14,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'gruvbox-community/gruvbox'
-Plug 'junegunn/fzf', { 'do': function('fzf#install') }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -23,10 +23,20 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'vim-utils/vim-man'
 Plug 'rust-lang/rust.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+Plug '/apollo/env/envImprovement/vim/amazon/brazil-config/'
+
 
 if has('nvim')
-  " Also :CocInstall coc-python coc-json coc-cmake coc-html coc-yaml
+  " :CocInstall coc-json coc-cmake coc-html coc-yaml coc-clangd coc-css coc-sh coc-vimlsp coc-xml
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  if has('python3')
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  endif
 endif
 
 call plug#end()
@@ -39,6 +49,7 @@ endif
 
 let mapleader = " "
 nnoremap <leader>ff :GFiles<cr>
+nnoremap <leader>fG :GFiles?<cr>
 nnoremap <leader>fF :Files<cr>
 nnoremap <leader>ps :Rg<cr>
 " Search for word under cursor
@@ -130,6 +141,9 @@ set shortmess+=c
 
 set title
 set titlestring=%{hostname()}\ \ %F\ \ %{strftime('%Y-%m-%d\ %H:%M',getftime(expand('%')))}
+
+" coc default %{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline=%f\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
