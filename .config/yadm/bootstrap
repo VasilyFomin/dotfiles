@@ -1,7 +1,17 @@
 #!/bin/sh
 
-mkdir ~/bin
+mkdir -p ~/bin
 echo "Downloading nvim"
-mkdir ~/bin
 curl -fLo ~/bin/vim https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 chmod a+x ~/bin/vim
+echo "Installed nvim"
+
+echo "Downloading fd"
+curl -fLo /tmp/fd.tar.gz https://github.com/sharkdp/fd/releases/download/v8.2.1/fd-v8.2.1-x86_64-unknown-linux-musl.tar.gz
+tar --strip-components=1 -zxvf /tmp/fd.tar.gz -C ~/bin/ fd-v8.2.1-x86_64-unknown-linux-musl/fd
+echo "Installed fd"
+
+echo "Downloading rg"
+curl -fLo /tmp/rg.tar.gz https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep-12.1.1-x86_64-unknown-linux-musl.tar.gz
+tar --strip-components=1 -zxvf /tmp/rg.tar.gz -C ~/bin/ ripgrep-12.1.1-x86_64-unknown-linux-musl/rg
+echo "Installed rg"
