@@ -8,14 +8,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'mileszs/ack.vim'
-Plug 'joshdick/onedark.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'gruvbox-community/gruvbox'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tmux-plugins/vim-tmux-focus-events'
@@ -26,19 +21,21 @@ Plug 'rust-lang/rust.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'michaeljsmith/vim-indent-object'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+" TSInstall bash c cpp dockerfile css go gomod html java json lua python ruby rust toml yaml
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'hrsh7th/nvim-compe'
+" dependencies
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+" telescope
+Plug 'nvim-telescope/telescope.nvim'
 
 if isdirectory("/apollo/env/envImprovement/vim/amazon/brazil-config/")
     Plug '/apollo/env/envImprovement/vim/amazon/brazil-config/'
-endif
-
-if has('nvim')
-  " :CocInstall coc-json coc-cmake coc-html coc-yaml coc-clangd coc-css coc-sh coc-vimlsp coc-xml
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  if has('python3')
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-  endif
 endif
 
 call plug#end()
@@ -50,13 +47,14 @@ if exists('+termguicolors')
 endif
 
 let mapleader = " "
-nnoremap <leader>ff :GFiles<cr>
-nnoremap <leader>fG :GFiles?<cr>
-nnoremap <leader>fF :Files<cr>
-nnoremap <leader>ps :Rg<cr>
-" Search for word under cursor
-nnoremap <leader>pw :Rg <C-R><C-W><CR>
-nnoremap <leader>bb :Buffers<cr>
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope git_files<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>ps <cmd>Telescope live_grep<cr>
+nnoremap <leader>pw <cmd>Telescope grep_string<cr>
+nnoremap <leader>bb Telescope buffers<cr>
 
 nnoremap <silent> <leader>h :wincmd h<CR>
 nnoremap <silent> <leader>j :wincmd j<CR>
